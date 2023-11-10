@@ -197,18 +197,6 @@ function log(a: number): number {
     return Math.log(a);
 }
 
-
-
-/**
-* @description This function calculates the sine of a given number `a` using the 
-* `Math.sin()` method.
-* 
-* @param { number } a - The `a` input parameter is passed to the `Math.sin()` function 
-* and determines the angle to be calculated.
-* 
-* @returns { number } The output returned by the function `sin` is a number representing 
-* the sine of the input `a`, which is calculated using the `Math.sin()` method.
-*/
 function sin(a: number): number {
     return Math.sin(a);
 }
