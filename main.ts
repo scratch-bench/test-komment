@@ -1,9 +1,4 @@
-{/**
-* @description this is sample inference
-* 1/ Example of a mult-line comment
-* 2/ This should be tabbed
-*       - x
-*/}
+
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setHeader } from './actions/contentActions';
