@@ -1,12 +1,35 @@
 
 class Book {
 
+/**
+* @description This is a constructor function that initializes the properties `title`, 
+* `author`, and `isbn` for an object representing a book.
+* 
+* @param { string } title - The `title` input parameter sets the value of the `title` 
+* property of the object being constructed.
+* 
+* @param { string } author - The `author` input parameter sets the value of the 
+* `author` property within the newly constructed book object.
+* 
+* @param { string } isbn - The `isbn` input parameter is a required string value 
+* that represents the International Standard Book Number for the book being constructed.
+* 
+* @returns { object } The output returned by this function is "undefined".
+*/
     constructor(title, author, isbn) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
     }
 
+/**
+* @description This function is a string representation of an object that returns a 
+* string with the object's title and author information.
+* 
+* @returns { string } The output returned by this function is:
+* 
+* "by"
+*/
     toString() {
         return `${this.title} by ${this.author} (ISBN: ${this.isbn})`;
     }
