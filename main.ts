@@ -196,15 +196,7 @@ function log(a: number): number {
     return Math.log(a);
 }
 
-/**
-* @description The given function `sin(a: number): number` calculates and returns 
-* the sine of the input number `a`.
-* 
-* @param { number } a - The `a` input parameter is passed as an argument to the 
-* mathematical function `Math.sin()`.
-* 
-* @returns { number } The output returned by this function is `Math.sin(a)`.
-*/
+
 function sin(a: number): number {
     return Math.sin(a);
 }
