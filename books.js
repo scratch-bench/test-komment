@@ -1,50 +1,6 @@
 
 class Book {
-/**
-* @description This is a constructor function that initializes an object with 
-* properties "title", "author", and "isbn".
-* 
-* @param { string } title - In the provided constructor function, the `title` input 
-* parameter is used to set the value of the `title` property of the object being constructed.
-* 
-* More specifically, the constructor takes three parameters: `title`, `author`, and 
-* `isbn`.
-* 
-* For example, if we call the constructor like this:
-* ```
-* const book = new Book("The Great Gatsby", "F.
-* 
-* @param { string } author - In the function you provided, the `author` input parameter 
-* is not being used or assigned any value.
-* 
-* In other words, the function doesn't do anything with the `author` parameter, it 
-* is not being stored in any property or variable, and it is not being used to modify 
-* the object's state in any way.
-* 
-* If you wanted to use the `author` parameter in the constructor function, you could 
-* assign it to a property or variable, like this:
-* ```
-* constructor(title, author, isbn) {
-*     this.title = title;
-*     this.author = author;
-*     this.isbn = isbn;
-* }
-* ```
-* This way, the `author` parameter would be stored in the object as a property, and 
-* it could be accessed and used later on.
-* 
-* @param { string } isbn - In this constructor function, the `isbn` input parameter 
-* is used to set the value of the `isbn` property of the object that is being created.
-* 
-* In other words, when you call the constructor with the arguments `title`, `author`, 
-* and `isbn`, the values of these arguments will be assigned to the corresponding 
-* properties of the new object.
-* 
-* The `isbn` parameter is optional, so you can omit it if you don't want to set a 
-* value for the `isbn` property.
-* 
-* @returns { object } - This function does not return any output.
-*/
+
     constructor(title, author, isbn) {
         this.title = title;
         this.author = author;
