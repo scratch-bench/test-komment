@@ -1,62 +1,62 @@
-// already documented
-/**
-* @description This function returns `true`.
-* 
-* @returns { boolean } The output returned by the function `test()` is `true`.
-*/
-function test() {
-    return true;
-}
+{/**
+* @description this is sample inference
+* 1/ Example of a mult-line comment
+* 2/ This should be tabbed
+*       - x
+*/}
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { setHeader } from './actions/contentActions';
 
 /**
-* @description This function does nothing. It has no implementation body and only 
-* contains a void return statement.
+* @description This function renders a component that displays a header, a button 
+* to change the header, and some placeholder text. It uses React's `useSelector` and 
+* `useDispatch` hooks to retrieve the current header value and the dispatch function 
+* from the Redux store.
 * 
-* @returns { any } There is no output returned by the `other()` function because it 
-* does not contain any statements that produce output.
+* @returns { Component } - The function returns a React component that renders an 
+* `<h1>` element with the text of the header stored in the Redux state, along with 
+* a button to change the header.
 */
-function other(delta) {
+const App: React.FC = () => {
+  /**
+  * @description This function selects the `header` property of the state object and 
+  * returns its value.
+  * 
+  * @param { any } state - In the given function `useSelector((state: any) => 
+  * state.header)`, the `state` parameter is an optional argument that is passed as 
+  * the first argument to the `selector` function. It represents the current state of 
+  * the component or application and can be used to retrieve information from that state.
+  */
+  const header = useSelector((state: any) => state.header);
+  const dispatch = useDispatch();
+
+  /**
+  * @description The provided function `changeHeader` is an action creator that 
+  * dispatches a `setHeader` action with the payload `"Updated Header using Redux"`.
+  * 
+  * @returns { any } - The function `changeHeader` does not return any value explicitly, 
+  * as it is an arrow function and the default return value is undefined.
+  */
+  const changeHeader = () => {
+    dispatch(setHeader("Updated Header using Redux"));
+  };
+
+  return (
+    <div className= "bg-gray-100 p-6" >
+    <h1 className="text-4xl mb-4 font-bold" > { header } < /h1>
+      < button className = "bg-blue-500 text-white px-4 py-2 rounded" onClick = { changeHeader } >
+        Change Header
+          < /button>
+          < p className = "mt-6" >
+            Lorem ipsum dolor sit...
+  </p>
+    < /div>
+    );
 }
 
-/**
-* @description The function `lerp(left`,`right`,`delta`) takes three arguments: 
-* `left`, `right`, and `delta`. It returns a value that is a linear interpolation 
-* of `left` and `right`, where `delta` represents the proportion of `right` to blend 
-* into `left`.
-* 
-* @param { number } left - The `left` input parameter determines the starting value 
-* of the linear interpolation.
-* 
-* @param { any } right - The `right` input parameter of the `lerp` function is used 
-* to determine the amount of blending between the `left` and the final result.
-* 
-* @param { number } delta - The `delta` input parameter controls the interpolation 
-* between `left` and `right`, with higher values of `delta` resultingin a more rapidly 
-* moving point towards the right value.
-* 
-* @returns { number } The output of the function `lerp` is a linear interpolation 
-* between the values of `left` and `right`, with the interpolating factor being `delta`.
-* 
-* output = left * (1 - delta) + right * delta
-*/
-function lerp(left, right, delta) {
-    return left * (1 - delta) + right * delta;
-}
+export default App;
 
-class Ticker {
-/**
-* @description This is a constructor function for an object.
-* 
-* @returns { object } The output returned by this function is undefined.
-*/
-    constructor() {
-        this.count = 0;
-    }
-}
-
-/**
- * also doced
- */
-function fail() {
-    return false;
-}
+message => {
+  setrQMessages(prevMessages => [...prevMessages, message]);
+} 
