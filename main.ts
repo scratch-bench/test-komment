@@ -15,7 +15,6 @@ function add(a: number, b: number): number {
     return a + b;
 }
 
-
 /**
 * @description This function takes two numbers `a` and `b`, and returns their 
 * difference `a - b`.
