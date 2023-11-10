@@ -1,12 +1,34 @@
 
 class Book {
 
+/**
+* @description This function creates a new object with properties `title`, `author`, 
+* and `isbn` based on the input parameters `title`, `author`, and `isbn`.
+* 
+* @param { string } title - The `title` input parameter sets the value of the `title` 
+* property of the object being constructed.
+* 
+* @param { string } author - The `author` input parameter sets the value of the 
+* `author` property within the object that is being constructed.
+* 
+* @param { string } isbn - The `isbn` input parameter is a requirement for the 
+* construction of a new `Book` object.
+* 
+* @returns { object } The output of this function would be `undefined`.
+*/
     constructor(title, author, isbn) {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
     }
 
+/**
+* @description This function is a custom toString method for an object.
+* 
+* @returns { string } The output returned by this function is:
+* 
+* "[Not defined] by [Not defined] (ISBN: [Not defined])".
+*/
     toString() {
         return `${this.title} by ${this.author} (ISBN: ${this.isbn})`;
     }
