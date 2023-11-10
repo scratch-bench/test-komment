@@ -7,15 +7,6 @@ class Book {
         this.isbn = isbn;
     }
 
-/**
-* @description This function returns a string representation of the object, containing 
-* the title, author, and ISBN.
-* 
-* @returns { string } - The output returned by this function is a string that 
-* represents the title, author, and ISBN of the book. The string is constructed using 
-* variables `title`, `author`, and `isbn` that are properties of the object, and 
-* template literals `${...}` to format the strings.
-*/
     toString() {
         return `${this.title} by ${this.author} (ISBN: ${this.isbn})`;
     }
