@@ -12,7 +12,11 @@ function test() {
 * @returns { any } There is no output returned by the `other()` function because it 
 * does not contain any statements that produce output.
 */
-function other() {
+function other(delta) {
+}
+
+function scale(left, right, delta) {
+    return left * (1 - delta) + right * delta;
 }
 
 class Ticker {
