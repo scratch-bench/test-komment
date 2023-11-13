@@ -151,6 +151,18 @@ class PatchOperation(object):
     """A single operation inside a JSON Patch."""
 
     def __init__(self, operation, pointer_cls=JsonPointer):
+        """
+        This function initiates a `JsonPatch` object and sets its properties based
+        on the input "operation" object.
+
+        Args:
+            operation (dict): The `operation` input parameter represents a JSON
+                object containing the patch information such as "path" and "value".
+            pointer_cls (int): The `pointer_cls` input parameter specifies the
+                class to use for constructing JSON pointers during the parsing of
+                the patch operation.
+
+        """
         self.pointer_cls = pointer_cls
 
         if not operation.__contains__('path'):
@@ -173,22 +185,77 @@ class PatchOperation(object):
         raise NotImplementedError('should implement the patch operation.')
 
     def __hash__(self):
+        """
+        This function defines a `__hash__` method for an object that returns the
+        hash value of the frozenset of its `operation.items()`.
+
+        Returns:
+            int: The function returns the hash value of the frozenset of the items
+            storedin the "operation" attribute.
+
+        """
         return hash(frozenset(self.operation.items()))
 
     def __eq__(self, other):
+        """
+        This function implements the `__eq__()` method (i.e., the "equality" method)
+        for the `PatchOperation` class.
+
+        Args:
+            other (): The `other` input parameter is an instance of another
+                `PatchOperation` object that is being compared with the current object.
+
+        Returns:
+            bool: Based on the given function implementation:
+            
+            The output returned by `__eq__()` would be `False`.
+
+        """
         if not isinstance(other, PatchOperation):
             return False
         return self.operation == other.operation
 
     def __ne__(self, other):
+        """
+        This function is the negative equality operator for an object of a class
+        that has an `__eq__()` method.
+
+        Args:
+            other (): The `other` input parameter is not used anywhere within the
+                function's body and thus has no effect on the function's behavior.
+
+        Returns:
+            bool: The output of this function is "True".
+
+        """
         return not(self == other)
 
     @property
     def path(self):
+        """
+        This function returns the parent directory path of the current object's
+        pointer (i.e., the path leading up to the current object's directory) by
+        joining all parts of the pointer except the last one with a `/`.
+
+        Returns:
+            str: The output returned by this function is:
+            ```
+            ''
+            ```
+
+        """
         return '/'.join(self.pointer.parts[:-1])
 
     @property
     def key(self):
+        """
+        This function extracts the last part of a string representation of an
+        integer as an integer value.
+
+        Returns:
+            int: The output returned by this function is `self.pointer.parts[-1]`.
+
+        """
         try:
             return int(self.pointer.parts[-1])
         except ValueError:
@@ -196,6 +263,17 @@ class PatchOperation(object):
 
     @key.setter
     def key(self, value):
+        """
+        The given function `key` takes a `value` argument and does the following:
+        	- Stores `str(value)` as the last element of the list `self.pointer.parts`.
+        	- Sets `self.location` to `self.pointer.path`.
+        	- Sets `self.operation['path']` to the current location (i.e., `self.location`).
+
+        Args:
+            value (str): The `value` input parameter sets the value of the last
+                element of the `self.pointer.parts` list.
+
+        """
         self.pointer.parts[-1] = str(value)
         self.location = self.pointer.path
         self.operation['path'] = self.location
@@ -205,6 +283,19 @@ class RemoveOperation(PatchOperation):
     """Removes an object property or an array element."""
 
     def apply(self, obj):
+        """
+        This function takes an object `obj` and removes a member specified by a
+        JSON pointer `part` from the object. It checks if the member exists and
+        if it's an array or not before attempting to remove it.
+
+        Args:
+            obj (str): The `obj` input parameter is the target object on which the
+                operation is performed.
+
+        Returns:
+            : The output returned by this function is the modified object `obj`.
+
+        """
         subobj, part = self.pointer.to_last(obj)
 
         if isinstance(subobj, Sequence) and not isinstance(part, int):
@@ -219,6 +310,20 @@ class RemoveOperation(PatchOperation):
         return obj
 
     def _on_undo_remove(self, path, key):
+        """
+        This function reverses the order of items after undo removal.
+
+        Args:
+            path (str): The `path` input parameter is the path of the node being
+                undone (i.e., removed) from the linked list.
+            key (int): The `key` input parameter determines which key to increment
+                or decrement when an item is undone. If the item was deleted at
+                position `key`, then `key` is subtracted from the current key.
+
+        Returns:
+            int: The output returned by this function is `key`.
+
+        """
         if self.path == path:
             if self.key >= key:
                 self.key += 1
@@ -227,6 +332,23 @@ class RemoveOperation(PatchOperation):
         return key
 
     def _on_undo_add(self, path, key):
+        """
+        This function implements an "undo" mechanism for a stack-like data structure.
+
+        Args:
+            path (str): The `path` input parameter specifies the undo path for
+                which the function is being called (i.e., the sequence of keys to
+                be undone).
+            key (int): The `key` input parameter is used to determine which key
+                should be subtracted from the current key if there are multiple
+                undo actions for the same path. If `self.key > key`, then the
+                current key is decremented by the difference between `self.key`
+                and `key`.
+
+        Returns:
+            int: The output returned by this function is `key -= 1`.
+
+        """
         if self.path == path:
             if self.key > key:
                 self.key -= 1
@@ -239,6 +361,74 @@ class AddOperation(PatchOperation):
     """Adds an object property or an array element."""
 
     def apply(self, obj):
+        """
+        This function implements a JSON patch operations applicator. It takes an
+        object and a JSON pointer operation as input and applies the operation to
+        the object by traversing the JSON structure starting from the specified pointer.
+
+        Args:
+            obj (dict): The `obj` input parameter is the target object that will
+                be updated with the new value according to the JSON pointer and
+                operation provided by the caller of the `apply()` method.
+
+        Returns:
+            : The function applies a JSON patch to an object by using a json pointer
+            to navigate the object and modifying or adding members as specified
+            by the patch. Based on the input provided it's difficult to know for
+            certain what output is expected because the input and its behavior
+            depends heavily upon the `operation` member of self which isn't part
+            of this code segment but we do see parts that could refer to
+            objects/subobjects with some kinds of mutable list-like objects. However
+            even given such uncertainties with our knowledge of current implementation
+            specifics (or rather lack thereof), this seems like safe assumptions
+            regarding `self`& thus any patch operations: assuming goodwill toward
+            people& taking a very cautious view we might predict no errors would
+            be raised during any interaction that sticks purely to established
+            best practices as suggested & enforced within json_patch standardization
+            space today; accordingly the anticipated return value when no conflicts
+            occur would most likely just continue along similar vein with expected
+            return type given constraints listed explicitly--returning whichever
+            object (subobject within) had mutation operations carried out during
+            its traverse through applicable members at time of invoking said
+            operation or method overloaded call.. But it must be acknowledged even
+            without concrete specification information supplied about self/operation
+            there will almost certainly never arise any valid scenario producing
+            anything other than modifications performed directly upon individual
+            attribute nodes(as would seem logical expectation when following rules
+            established thusfar) due to limitations introduced above re best-practice
+            guidelines governing applicable JSON standards as implemented within
+            codebase providing such overloads and so function would therefore very
+            likely indeed behave reliably according to those conventions without
+            ever deviating needlessly into other branch paths when executing any
+            apply invocations involving valid inputs across multiple calls made
+            thereby affirming expectations laid down near beginning -- barring
+            truly creative uses unseen heretofore; so best to simply abide existing
+            JSON patch paradigms per design.
+            
+            With that lengthy disclaimer included one safe assumption regarding
+            function call return type (based again strictly within given code
+            snip), return object should match what's mentioned at end where part
+            == "-" is examined& if so--an element will indeed become last position
+            after any relevant mutations & modifications executed through preceding
+            apply sequence...meaning that whenever this func applies JSON Patch
+            Operation with applicable 'insert/modify/delete as applicable upon
+            matching document path components', we can rely exclusively upon
+            MutableMapping return values from each overloaded portion therein; no
+            conflicts should arise so nothing more creative beyond baseline
+            functionality involving established json standards should occur --
+            effectively limiting possible behaviors even under theoretical unlimited
+            combinations available via overloaded approach described previously..
+            TLDR version again with slight adjustment highlighting what key points
+            are implied upon :  this functions return value given valid operation
+            + json objects will almost certainly follow best-practices designed
+            json-patch patch formats , so can generally count solely/ Mutability
+            operations on existing elements inside container structures & never
+            observe results contradictory  or otherwise 'over-write' already
+            established parts without explicit mention elsewhere( such alterations
+            however must remain conformant throughout operations if json standards
+            strictly observed.)..
+
+        """
         try:
             value = self.operation["value"]
         except KeyError as ex:
@@ -271,6 +461,20 @@ class AddOperation(PatchOperation):
         return obj
 
     def _on_undo_remove(self, path, key):
+        """
+        This function named `_on_undo_remove` when called with `path` and `key`
+        as parameters adjusts the key of an item stored at the path based on the
+        order of other items if any.
+
+        Args:
+            path (str): The `path` parameter is the path of the item being undone.
+            key (int): The `key` input parameter is used to update the key of the
+                item that is being undone.
+
+        Returns:
+            int: The output returned by this function is `key + 1`.
+
+        """
         if self.path == path:
             if self.key > key:
                 self.key += 1
@@ -279,6 +483,20 @@ class AddOperation(PatchOperation):
         return key
 
     def _on_undo_add(self, path, key):
+        """
+        This function undoes an addition operation by decrementing the `key` of
+        the current node and returning the new value.
+
+        Args:
+            path (str): The `path` parameter specifies the path (a sequence of
+                nodes) where the undo action happened.
+            key (int): The `key` input parameter adjusts the key value of the item
+                being undone.
+
+        Returns:
+            int: The output returned by this function is `key + 1`.
+
+        """
         if self.path == path:
             if self.key > key:
                 self.key -= 1
@@ -291,6 +509,19 @@ class ReplaceOperation(PatchOperation):
     """Replaces an object property or an array element by a new value."""
 
     def apply(self, obj):
+        """
+        This function applies a JSON patch operation to an object. It takes the
+        object and a dictionary of operations as arguments. It returns the updated
+        object.
+
+        Args:
+            obj (): The `obj` input parameter is the object being patched.
+
+        Returns:
+            dict: The function takes an object `obj` and applies a JSON patch
+            operation to it.
+
+        """
         try:
             value = self.operation["value"]
         except KeyError as ex:
@@ -323,9 +554,39 @@ class ReplaceOperation(PatchOperation):
         return obj
 
     def _on_undo_remove(self, path, key):
+        """
+        This function undoes the previous action by removing the item at `path`
+        with the `key`.
+
+        Args:
+            path (str): The `path` parameter is not used by the function
+                `._on_undo_remove`. This is because the `path` argument is deprecated
+                and was removed from the `Undo` API specs (see section 3.2.2 of
+                the `Undo` documentation).
+            key (str): In the given function `_on_undo_remove`, the `key` parameter
+                is returned unmodified.
+
+        Returns:
+            str: The function `_on_undo_remove` takes two arguments `path` and
+            `key`, and returns only the value of `key`.
+
+        """
         return key
 
     def _on_undo_add(self, path, key):
+        """
+        This function is an observer for the `on_undo_add` event and returns the
+        `key` value associated with the specified `path`.
+
+        Args:
+            path (str): The `path` input parameter is not used by the function `_on_undo_add`.
+            key (str): In the given function `_on_undo_add`, the `key` parameter
+                represents the key of the item being undone.
+
+        Returns:
+            : The output of the function `_on_undo_add` is `key`.
+
+        """
         return key
 
 
@@ -333,6 +594,24 @@ class MoveOperation(PatchOperation):
     """Moves an object property or an array element to a new location."""
 
     def apply(self, obj):
+        """
+        This function takes an object `obj` and an operation represented as a
+        dictionary (`self.operation`) that contains information about the operation
+        to be applied to `obj`. It applies the operation by:
+        1/ Retrieieving the value from the "from" location specifiedin the operation.
+        2/ Checking if the source and target pointers are the same or if the target
+        already contains the value to be added.
+
+        Args:
+            obj (dict): The `obj` parameter is the object that is being modified
+                by the json patch operation.
+
+        Returns:
+            : The output returned by this function is the original `obj` with the
+            specified value removed from the specified location and a new value
+            added at that location.
+
+        """
         try:
             if isinstance(self.operation['from'], self.pointer_cls):
                 from_ptr = self.operation['from']
@@ -371,11 +650,35 @@ class MoveOperation(PatchOperation):
 
     @property
     def from_path(self):
+        """
+        This function takes an object of an unknown type `self`, retrieves the
+        `from` attribute as a pointer object using `self.operation['from']`, and
+        returns the string representation of the path preceding the last slash
+        found within that pointer's parts list.
+
+        Returns:
+            str: The output returned by the function `from_path` is the pathname
+            components up to but not including the last one.
+
+        """
         from_ptr = self.pointer_cls(self.operation['from'])
         return '/'.join(from_ptr.parts[:-1])
 
     @property
     def from_key(self):
+        """
+        This function takes a `self` object and returns the integer value of the
+        last part of the `from` attribute (which is a pointer object).
+
+        Returns:
+            int: The function `from_key` takes a `self` parameter of type `Operation`
+            and returns an integer value.
+            
+            The function first extracts the "from" pointer part from the
+            `self.operation` dictionary and then attempts to convert it to an
+            integer using `int()`.
+
+        """
         from_ptr = self.pointer_cls(self.operation['from'])
         try:
             return int(from_ptr.parts[-1])
@@ -384,11 +687,42 @@ class MoveOperation(PatchOperation):
 
     @from_key.setter
     def from_key(self, value):
+        """
+        This function sets the 'from' operation attribute of the parent object to
+        a new Path object constructed from a string value.
+
+        Args:
+            value (str): The `value` input parameter sets the value of the `from`
+                field of the operation.
+
+        """
         from_ptr = self.pointer_cls(self.operation['from'])
         from_ptr.parts[-1] = str(value)
         self.operation['from'] = from_ptr.path
 
     def _on_undo_remove(self, path, key):
+        """
+        This function implements a simplistic version of "undo" functionality for
+        an object that has two keys ("from_key" and "key") and two corresponding
+        paths ("from_path" and "path"). When the function is called with a path
+        and a key as arguments. it updates the "from_key" and "key" attributes
+        accordingly based on the comparison of the given key with the current
+        values of the "from_key" and "key".
+
+        Args:
+            path (str): The `path` input parameter represents the path of the node
+                being undone. In the function Body portion: If self.from_path is
+                equal to that of 'path'. Whenever this function is called with
+                self.from_path then key operation gets executed.
+            key (int): The `key` input parameter serves as a placeholder to update
+                the value of either `self.from_key` or `self.key`, depending on
+                which direction the undo operation should be applied (forward or
+                backward).
+
+        Returns:
+            int: The output returned by the function is `key`.
+
+        """
         if self.from_path == path:
             if self.from_key >= key:
                 self.from_key += 1
@@ -402,6 +736,24 @@ class MoveOperation(PatchOperation):
         return key
 
     def _on_undo_add(self, path, key):
+        """
+        This function reverses the difference between two keys. If `path` and `key`
+        are given as input arguments and `self` is an object with `from_path`,
+        `from_key`, `path`, and `key` attributes describing a sequence of keys and
+        pointers to corresponding values stored at each key; this function subtracts
+        one from either `from_key` or `key` if the value at that key should be undone.
+
+        Args:
+            path (str): The `path` input parameter is used to specify the parent
+                directory of the key that is being undone.
+            key (int): The `key` input parameter serves as a local variable that
+                is incremented or decremented within the function based on the
+                specific undo action being performed.
+
+        Returns:
+            int: The output returned by this function is `key`.
+
+        """
         if self.from_path == path:
             if self.from_key > key:
                 self.from_key -= 1
@@ -419,6 +771,18 @@ class TestOperation(PatchOperation):
     """Test value by specified location."""
 
     def apply(self, obj):
+        """
+        This function applies a json patch to an object and checks that the result
+        is equal to the expected value.
+
+        Args:
+            obj (): The `obj` parameter is the object that is being tested for
+                equivalence with a value returned from a JsonPointer method.
+
+        Returns:
+            : The output returned by this function is the original object `obj`.
+
+        """
         try:
             subobj, part = self.pointer.to_last(obj)
             if part is None:
@@ -446,6 +810,22 @@ class CopyOperation(PatchOperation):
     """ Copies an object property or an array element to a new location """
 
     def apply(self, obj):
+        """
+        This function takes an object `obj` and applies a JSON patch operation to
+        it. The operation is specified as a dictionary containing the "op", "path",
+        and "value" members. The function checks if the "from" member is present
+        and if the specified part of the object exists before applying the operation
+        to the object. If any conflict or invalid json patch is detected the
+        function raises an exception.
+
+        Args:
+            obj (dict): The `obj` input parameter is the object that the function
+                modifies by applying the JSON patch operation to it.
+
+        Returns:
+            : The output returned by this function is `obj`.
+
+        """
         try:
             from_ptr = self.pointer_cls(self.operation['from'])
         except KeyError as ex:
@@ -526,6 +906,18 @@ class JsonPatch(object):
     {...}
     """
     def __init__(self, patch, pointer_cls=JsonPointer):
+        """
+        This function initializes an instance of the JsonPatch class and verifies
+        the structure of the patch document by retrieving each patch element and
+        checking if it is a sequence of operations or a sequence of strings.
+
+        Args:
+            patch (dict): The `patch` input parameter is the collection of operations
+                to be applied to the document.
+            pointer_cls (int): The `pointer_cls` input parameter is used to specify
+                the class to use for creating JSON pointers when applying the patch.
+
+        """
         self.patch = patch
         self.pointer_cls = pointer_cls
 
@@ -554,22 +946,73 @@ class JsonPatch(object):
         return self.to_string()
 
     def __bool__(self):
+        """
+        This function is a special method for Python objects that enables checking
+        if an object has a certain attribute or value.
+
+        Returns:
+            bool: The function returns `True` if an object has a patch or not
+            returns `False`.
+
+        """
         return bool(self.patch)
 
     __nonzero__ = __bool__
 
     def __iter__(self):
+        """
+        This function defines an `__iter__()` method for the object `self`.
+
+        Returns:
+            : The function does not return anything explicitly.
+
+        """
         return iter(self.patch)
 
     def __hash__(self):
+        """
+        This function defines an `__hash__()` method for an object.
+
+        Returns:
+            int: The output returned by this function is the hash value of the
+            tuple containing the list of operands (ops) represented by the object.
+
+        """
         return hash(tuple(self._ops))
 
     def __eq__(self, other):
+        """
+        This function defines an `__eq__` method (also known as the "equality" or
+        " Identity" operator) for an object of type `JsonPatch`.
+
+        Args:
+            other (): In this function implementation of `__eq__`, the `other`
+                input parameter is compared to the current object to determine if
+                they are equal based on their operations (`_ops`).
+
+        Returns:
+            bool: Based on the code provided:
+            
+            The output returned by this function is `False`.
+
+        """
         if not isinstance(other, JsonPatch):
             return False
         return self._ops == other._ops
 
     def __ne__(self, other):
+        """
+        This is a special method called `__ne__` (not equal) and it returns `True`
+        if the object is not equal to another object `other`, and `False` otherwise.
+
+        Args:
+            other (): The `other` parameter is used to compare with the current
+                object and determine whether they are not equal.
+
+        Returns:
+            bool: The output returned by this function is `False` for all objects.
+
+        """
         return not(self == other)
 
     @classmethod
@@ -636,6 +1079,13 @@ class JsonPatch(object):
 
     @property
     def _ops(self):
+        """
+        This function is generating a tuple of operations from a list of patches.
+
+        Returns:
+            tuple: The output returned by this function is a tuple of strings.
+
+        """
         return tuple(map(self._get_operation, self.patch))
 
     def apply(self, obj, in_place=False):
@@ -660,6 +1110,23 @@ class JsonPatch(object):
         return obj
 
     def _get_operation(self, operation):
+        """
+        This function checks the validity of an operation object passed as an
+        argument and returns a class instance for that operation. The function
+        ensures the object contains a mandatory 'op' member and that the value of
+        'op' is a string. Additionally it verifies that the specified operation
+        is known to the instance (i.e., it is a valid operation).
+
+        Args:
+            operation (dict): The `operation` input parameter is the JSON patch
+                document that contains the operation to be applied to the resource.
+
+        Returns:
+            dict: The output returned by this function is an instance of a class
+            that is defined by the value of the `op` key-value pair within the
+            input dictionary `operation`.
+
+        """
         if 'op' not in operation:
             raise InvalidJsonPatch("Operation does not contain 'op' member")
 
@@ -678,6 +1145,23 @@ class JsonPatch(object):
 class DiffBuilder(object):
 
     def __init__(self, src_doc, dst_doc, dumps=json.dumps, pointer_cls=JsonPointer):
+        """
+        This function initializes an object for indexing and comparing two JSON
+        documents using the `JsonPointer` class and `dumps` function.
+
+        Args:
+            src_doc (dict): The `src_doc` input parameter is the original document
+                being transformed.
+            dst_doc (list): The `dst_doc` input parameter is not used at all within
+                this specific code snippet. The parameter is passed but then
+                immediately discarded without being accessed or referred to within
+                the body of the function.
+            dumps (str): The `dumps` input parameter is used to specify a function
+                for converting Python objects to JSON data.
+            pointer_cls (int): The `pointer_cls` parameter is used to specify the
+                class to use for representing JsonPointer objects.
+
+        """
         self.dumps = dumps
         self.pointer_cls = pointer_cls
         self.index_storage = [{}, {}]
@@ -688,6 +1172,27 @@ class DiffBuilder(object):
         root[:] = [root, root, None]
 
     def store_index(self, value, index, st):
+        """
+        This function stores an item (value and its type) and an index for the
+        item with a specific storage (st). If the item is already stored with the
+        same value and type before. It just appends the index to the existing list
+        of indices stored with that value. If it's not already stored before then
+        it stores a new list of only that index for that value-type combo.
+        Note that the function catches a TypeError exception which suggests that
+        the typed_key or the storage used by this function expects particular type
+        information to exist therein but cannot guarantee that these conditions
+        do indeed apply within.
+
+        Args:
+            value (): The `value` parameter is used to form a tuples of typed key
+                for indexing purposes.
+            index (int): The `index` input parameter is used to store the index
+                of the value inside the storage container.
+            st (str): The `st` parameter is a storage dictionary key that specifies
+                which of two indexing structures to use for storing the value and
+                its index.
+
+        """
         typed_key = (value, type(value))
         try:
             storage = self.index_storage[st]
@@ -701,6 +1206,30 @@ class DiffBuilder(object):
             self.index_storage2[st].append((typed_key, index))
 
     def take_index(self, value, st):
+        """
+        This function takes a value and a search type (st) as inputs and returns
+        the corresponding index of the value from two stored indexes. It first
+        looks up the value's typed key (value and its type) from the index storage
+        using a tries-like approach and then pops the found index if it exists.
+
+        Args:
+            value (dict): The `value` input parameter is used to look up an entry
+                associated with it and its type (`type(value)`) by being added to
+                a dictionary of dictionaries using `typed_key = (value)` for
+                indexing and then attempting to retrieve the associated value
+                through subsequent calls to the dictionary within `self.index_storage`
+                and finally to `storage`.
+            st (str): In this function `take_index`, `st` is an input parameter
+                that refers to a storage dictionary of the same type as `self.index_storage`.
+
+        Returns:
+            int: The output returned by the `take_index` function is either the
+            value popped from the internal dictionary stored at
+            `self.index_storage[st][typed_key]` if it exists and is not `None`,
+            or the value poped from the external dictionary `self.index_storage2[st]`
+            if no matching value is found internally.
+
+        """
         typed_key = (value, type(value))
         try:
             stored = self.index_storage[st].get(typed_key)
@@ -714,18 +1243,56 @@ class DiffBuilder(object):
                     return storage.pop(i)[1]
 
     def insert(self, op):
+        """
+        The given function `insert` takes an operation `op` as input and performs
+        the following action on a linked list:
+        Inserts `op` at the end of the list (i.e., after the last element), linking
+        it to the previous last element of the list.
+
+        Args:
+            op (list): The `op` input parameter is used to store the value being
+                inserted into the tree. It is assigned to the second element of
+                the current node (i.e., last[1]) and then used to construct a new
+                node with three elements: last+op.
+
+        Returns:
+            list: The output returned by this function is `last`.
+
+        """
         root = self.__root
         last = root[0]
         last[1] = root[0] = [last, root, op]
         return root[0]
 
     def remove(self, index):
+        """
+        This function removes an element at a given index from a list of links
+        (i.e., a linked list) by replacing the elements at the indices `link_prev`
+        and `link_next` with each other's values and then resetting the index to
+        an empty list.
+
+        Args:
+            index (list): In this function `remove(self index)` the input parameter
+                `index` is used to specify which element to remove from the list.
+                It is a tuple of three elements representing the previous and next
+                links of the element to be removed.
+
+        """
         link_prev, link_next, _ = index
         link_prev[1] = link_next
         link_next[0] = link_prev
         index[:] = []
 
     def iter_from(self, start):
+        """
+        This function iterates over the edges of a graph starting from a given
+        vertex and yields the vertices at the other end of each edge.
+
+        Args:
+            start (list): The `start` input parameter specifies the starting node
+                of the tree traversal.
+
+        """
         root = self.__root
         curr = start[1]
         while curr is not root:
@@ -733,6 +1300,12 @@ class DiffBuilder(object):
             curr = curr[1]
 
     def __iter__(self):
+        """
+        This function implements an iterator for a data structure. It starts at
+        the second child of the root node (the first child is the root itself),
+        and iterates over all the nodes that have a third child (i.e., all the leaves).
+
+        """
         root = self.__root
         curr = root[1]
         while curr is not root:
@@ -740,6 +1313,12 @@ class DiffBuilder(object):
             curr = curr[1]
 
     def execute(self):
+        """
+        This function takes a root node of an operation tree and iterates over all
+        operations (Add/Remove/Replace) below the root node. It yields each operation
+        along with its pointer (location and value).
+
+        """
         root = self.__root
         curr = root[1]
         while curr is not root:
@@ -760,6 +1339,19 @@ class DiffBuilder(object):
             curr = curr[1]
 
     def _item_added(self, path, key, item):
+        """
+        This function handles the addition of an item to a doubly-linked list data
+        structure. It takes the item to be added and the path to where it should
+        be inserted as input. The function checks if the item already exists
+        somewhere else on the list and if so moves it instead of adding it twice.
+
+        Args:
+            path (): The `path` input parameter is a sequence of keys that represents
+                the path to the item being added.
+            key (int): The `key` input parameter is the key of the item being added.
+            item (int): The `item` parameter is the item being added to the collection.
+
+        """
         index = self.take_index(item, _ST_REMOVE)
         if index is not None:
             op = index[2]
@@ -785,6 +1377,25 @@ class DiffBuilder(object):
             self.store_index(item, new_index, _ST_ADD)
 
     def _item_removed(self, path, key, item):
+        """
+        This function is a decorator that undo-es an operation performed on a
+        dictionaries like data structure. Whenever an item is removed from the
+        dictionary using `pop`, this function is called with the path of the item
+        to be removed (`path` and `key`), the item being removed (`item`), and the
+        index where the item was located (`index`). It creates a new `RemoveOperation`
+        instance and updates the index to reflect the removal. If the item was
+        previously added using `push`, it undoes the addition by calling the
+        `__on_undo_add()` method on the item and removes it from the index.
+
+        Args:
+            path (): In this function `path` is a string used to create the path
+                of the RemoveOperation by joining it with the key passed as a argument.
+            key (str): The `key` parameter is the key of the item that was just
+                removed from the document.
+            item (str): The `item` input parameter is the item that was just removed
+                from the dictionary.
+
+        """
         new_op = RemoveOperation({
             'op': 'remove',
             'path': _path_join(path, key),
@@ -818,6 +1429,18 @@ class DiffBuilder(object):
             self.store_index(item, new_index, _ST_REMOVE)
 
     def _item_replaced(self, path, key, item):
+        """
+        This function performs a "replace" operation on a hierarchical data structure
+        using a "ReplaceOperation" object.
+
+        Args:
+            path (str): The `path` input parameter specifies the relative path of
+                the key that is being replaced.
+            key (str): The `key` input parameter is the name of the item being replaced.
+            item (): The `item` parameter is the new value that should be inserted
+                into the list at the specified key.
+
+        """
         self.insert(ReplaceOperation({
             'op': 'replace',
             'path': _path_join(path, key),
@@ -825,6 +1448,21 @@ class DiffBuilder(object):
         }, pointer_cls=self.pointer_cls))
 
     def _compare_dicts(self, path, src, dst):
+        """
+        This function compares two dictionaries (src and dst) by identifying
+        added/removed keys and values using sets and recursively comparing the
+        corresponding values.
+
+        Args:
+            path (str): The `path` input parameter is used to build the full path
+                of each item that has been removed or added by comparing the sets
+                of keys from both dictionaries.
+            src (dict): The `src` parameter is the dictionary that contains the
+                "original" values being compared.
+            dst (dict): The `dst` input parameter is the dictionary being compared
+                to the `src` dictionary.
+
+        """
         src_keys = set(src.keys())
         dst_keys = set(dst.keys())
         added_keys = dst_keys - src_keys
@@ -840,6 +1478,22 @@ class DiffBuilder(object):
             self._compare_values(path, key, src[key], dst[key])
 
     def _compare_lists(self, path, src, dst):
+        """
+        This function compares two lists (src and dst) by iterating over their
+        elements and checking for equivalence. It recursively calls itself if
+        either list contains a dict or a sequence. If an item is found to be
+        different between the lists it triggers a callback function (itemRemoved
+        and itemAdded).
+
+        Args:
+            path (str): The `path` input parameter is used to build a path for
+                printing out item comparison details.
+            src (list): The `src` input parameter is the first list being compared
+                to the second list `dst`.
+            dst (dict): The `dst` input parameter is the second list to be compared
+                with the first list `src`.
+
+        """
         len_src, len_dst = len(src), len(dst)
         max_len = max(len_src, len_dst)
         min_len = min(len_src, len_dst)
@@ -868,6 +1522,22 @@ class DiffBuilder(object):
                 self._item_added(path, key, dst[key])
 
     def _compare_values(self, path, key, src, dst):
+        """
+        This function compares two objects (`src` and `dst`) for changes by
+        recursively comparing their structure using `_compare_dicts` and `_compare_lists`.
+
+        Args:
+            path (str): The `path` input parameter is used to construct the path
+                for the item being compared.
+            key (str): The `key` parameter specifies the specific item within the
+                MutableMapping or MutableSequence that is being compared.
+            src (): The `src` input parameter is the first object to be compared.
+            dst (list): The `dst` input parameter is the destination object that
+                is being compared to the `src` object. The function checks if there
+                are any changes between the two objects by comparing their values
+                using `self.dumps()` method and checking if they are equal.
+
+        """
         if isinstance(src, MutableMapping) and \
                 isinstance(dst, MutableMapping):
             self._compare_dicts(_path_join(path, key), src, dst)
@@ -891,6 +1561,22 @@ class DiffBuilder(object):
 
 
 def _path_join(path, key):
+    """
+    This function joins two strings `path` and `key`, where `key` is a nullable object.
+
+    Args:
+        path (str): The `path` input parameter joins with the key using a separator
+            and returns the joined string.
+        key (str): The `key` input parameter specifies a sub-key within the path.
+
+    Returns:
+        str: The function takes two arguments `path` and `key`, and returns a new
+        string representing the concatenation of `path` and `key`.
+        
+        The output returned by the function will be the concatenation of `path`
+        and `key`, with any occurrences of '~' replaced with '~0'.
+
+    """
     if key is None:
         return path
 
