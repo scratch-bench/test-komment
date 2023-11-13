@@ -124,6 +124,26 @@ def apply_patch(doc, patch, in_place=False, pointer_cls=JsonPointer):
 
 
 def make_patch(src, dst, pointer_cls=JsonPointer):
+    """
+    This function creates a JSON patch (a list of changes to be applied to a JSON
+    document) from the differences between two JSON objects using the `JsonPointer`
+    class to represent pointers into the JSON documents.
+
+    Args:
+        src (): The `src` input parameter represents the starting state (the
+            "before" version), and the function uses it to generate a patch that
+            reflects the changes between the starting state and the desired ending
+            state (represented by the `dst` parameter).
+        dst (): The `dst` input parameter represents the target (modified) document
+            to which changes are being applied.
+        pointer_cls (int): The `pointer_cls` input parameter of the `make_patch()`
+            function specifies the type of pointer to use for dereferencing URLs
+            and other pointers contained within the JSON patch.
+
+    Returns:
+        : The function `make_patch` returns a `JsonPatch` object.
+
+    """
     return JsonPatch.from_diff(src, dst, pointer_cls=pointer_cls)
 
 
