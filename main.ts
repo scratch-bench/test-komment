@@ -197,6 +197,17 @@ function log(a: number): number {
 }
 
 
+/**
+* @description The function `sin(a)` takes a single argument `a` of type `number`,
+* and returns the sine of `a` as computed by the built-in `Math.sin()` method.
+* 
+* @param { number } a - The `a` input parameter passed to the `sin()` function is
+* used as an argument for the `Math.sin()` method which calculates the sine of that
+* value.
+* 
+* @returns { number } The output returned by the function is `NaN`, as `Math.sin()`
+* does not have a definition for non-numeric values.
+*/
 function sin(a: number): number {
     return Math.sin(a);
 }
