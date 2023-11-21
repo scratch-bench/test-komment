@@ -216,3 +216,4 @@ let result12: number = log(10);
 let result13: number = sin(Math.PI / 2);
 
 console.log(result1, result2, result3, result4, result5, result6, result7, result8, result9, result10, result11, result12, result13);
+
