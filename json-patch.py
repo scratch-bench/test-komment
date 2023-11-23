@@ -84,38 +84,6 @@ _jsonloads = functools.partial(json.loads, object_pairs_hook=multidict)
 
 
 def apply_patch(doc, patch, in_place=False, pointer_cls=JsonPointer):
-    """Apply list of patches to specified json document.
-
-    :param doc: Document object.
-    :type doc: dict
-
-    :param patch: JSON patch as list of dicts or raw JSON-encoded string.
-    :type patch: list or str
-
-    :param in_place: While :const:`True` patch will modify target document.
-                     By default patch will be applied to document copy.
-    :type in_place: bool
-
-    :param pointer_cls: JSON pointer class to use.
-    :type pointer_cls: Type[JsonPointer]
-
-    :return: Patched document object.
-    :rtype: dict
-
-    >>> doc = {'foo': 'bar'}
-    >>> patch = [{'op': 'add', 'path': '/baz', 'value': 'qux'}]
-    >>> other = apply_patch(doc, patch)
-    >>> doc is not other
-    True
-    >>> other == {'foo': 'bar', 'baz': 'qux'}
-    True
-    >>> patch = [{'op': 'add', 'path': '/baz', 'value': 'qux'}]
-    >>> apply_patch(doc, patch, in_place=True) == {'foo': 'bar', 'baz': 'qux'}
-    True
-    >>> doc == other
-    True
-    """
-
     if isinstance(patch, basestring):
         patch = JsonPatch.from_string(patch, pointer_cls=pointer_cls)
     else:
