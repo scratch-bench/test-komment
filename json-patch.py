@@ -6,6 +6,7 @@ import functools
 import json
 import sys
 
+
 try:
     from collections.abc import Sequence
 except ImportError:  # Python 3
