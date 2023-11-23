@@ -86,27 +86,6 @@ _jsonloads = functools.partial(json.loads, object_pairs_hook=multidict)
 
 
 def apply_patch(doc, patch, in_place=False, pointer_cls=JsonPointer):
-    """
-    This function applies a JSON Patch to a JSON document and modifies the document
-    "in-place" if desired.
-
-    Args:
-        doc (dict): The `doc` input parameter is the document to which the patch
-            operations should be applied.
-        patch (str): The `patch` input parameter is a JSON patch object or a string
-            representing a JSON patch.
-        in_place (bool): The `in_place` parameter is a Boolean value that determines
-            whether the updates made by the patch should be applied directly to
-            the original document (in place) or return a new document with the
-            applied updates.
-        pointer_cls (int): The `pointer_cls` parameter specifies the class to use
-            for creating JSON pointers during patch application.
-
-    Returns:
-        : The function `apply_patch` returns the modified document (i.e., `doc`)
-        after applying the given JSON patch (`patch`).
-
-    """
     if isinstance(patch, basestring):
         patch = JsonPatch.from_string(patch, pointer_cls=pointer_cls)
     else:
