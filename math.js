@@ -8,6 +8,7 @@ const divide = (a, b) => {
     return a / b;
 };
 
+
 const pow = (base, exponent) => Math.pow(base, exponent);
 const sqrt = (number) => {
     if (number < 0) {
