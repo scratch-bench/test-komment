@@ -91,6 +91,7 @@ def apply_patch(doc, patch, in_place=False, pointer_cls=JsonPointer):
     return patch.apply(doc, in_place)
 
 
+
 def make_patch(src, dst, pointer_cls=JsonPointer):
     """
     This function creates a JSON patch (a list of changes to be applied to a JSON
