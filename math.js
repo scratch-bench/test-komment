@@ -1,20 +1,4 @@
 
-/**
-* @description This function takes two parameters `a` and `b`, and returns their sum.
-* 
-* @param {  } a - In the given function `add=(a，b)=>(a+b)`, the `a` input parameter
-* is a numeric argument that is being added to the `b` input parameter.
-* 
-* @param { number } b - In the provided JavaScript function `add(a,...,b)`, the `b`
-* input parameter is used as a second operand to be added to the first operand `a`.
-* 
-* @returns { number } The function `add` takes two arguments `a` and `b`, and returns
-* their sum:
-* 
-* `add(undefined、undefined)`
-* 
-* Returns: `undefined`.
-*/
 const add = (a, b) => a + b;
 /**
 * @description This function subtracts `a` from `b` and returns the result.
