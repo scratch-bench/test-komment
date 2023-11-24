@@ -1,14 +1,4 @@
-/**
-* @description This function adds two numbers together and returns their sum.
-* 
-* @param { number } a - The `a` input parameter adds `b`, its other input parameter.
-* 
-* @param { number } b - In the provided function `add = (a , b) => a + b`, the `b`
-* input parameter adds the numeric value of `b` to the result of concatenating `a`
-* with the number 0 (as converted from string "b" to number using `parseInt`).
-* 
-* @returns { number } The output returned by the function `add` is `undefined`.
-*/
+
 const add = (a, b) => a + b;
 /**
 * @description This function subtracts `a` from `b` and returns the result.
