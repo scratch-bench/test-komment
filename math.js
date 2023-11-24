@@ -1,4 +1,16 @@
 
+/**
+* @description The given function `add` takes two arguments `a` and `b`, and returns
+* their sum.
+* 
+* @param { number } a - The `a` input parameter is the first operand to be added to
+* the `b` input parameter.
+* 
+* @param { number } b - In the given function `add = (a、b) → a+b`, the `b` input
+* parameter represents the value that is being added to `a`.
+* 
+* @returns { number } The output returned by this function is `NaN` (Not a Number).
+*/
 const add = (a, b) => a + b;
 /**
 * @description This function subtracts `a` from `b` and returns the result.
