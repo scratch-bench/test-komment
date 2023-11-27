@@ -354,6 +354,22 @@ class AddOperation(PatchOperation):
     """Adds an object property or an array element."""
 
     def apply(self, obj):
+        """
+        This function applies a JSON patch to an object. It takes the object and
+        a JSON pointer that specifies the location of the patch.
+
+        Args:
+            obj (dict): The `obj` input parameter is the target object that will
+                be modified by the JSON patch operation.
+
+        Returns:
+            : Based on the given code snippet and the information provided about
+            the function's behavior and purpose:
+            
+            The output returned by this function is the modified `obj` value after
+            applying the JSON patch.
+
+        """
         try:
             value = self.operation["value"]
         except KeyError as ex:
@@ -965,6 +981,31 @@ class JsonPatch(object):
             cls, src, dst, optimization=True, dumps=None,
             pointer_cls=JsonPointer,
     ):
+        """
+        This function takes two dictionaries `src` and `dst` and returns a list
+        of "ops" (e.g.
+
+        Args:
+            cls (): The `cls` parameter is a class object that contains the metadata
+                for the operation being performed (i.e., theDiff object).
+            src (int): The `src` input parameter is the "before" value being
+                compared to the `dst` value.
+            dst (): The `dst` parameter is the "destination" object that the diff
+                function is comparing the `src` object to.
+            optimization (bool): The `optimization` parameter controls whether the
+                function uses optimization to generate patches (default is `True`).
+            dumps (None): The `dumps` input parameter is used to provide an alternate
+                JSON dumper object to be used for serializing the objects being compared.
+            pointer_cls (int): The `pointer_cls` parameter is an optional class
+                that determines the type of JSON pointers used to represent
+                differences between objects.
+
+        Returns:
+            list: The output returned by the function `from_diff` is a list of
+            operations (called "ops") that can be used to transform the original
+            JSON object `src` into the updated JSON object `dst`.
+
+        """
         json_dumper = dumps or cls.json_dumper
         builder = DiffBuilder(src, dst, json_dumper, pointer_cls=pointer_cls)
         builder._compare_values('', None, src, dst)
