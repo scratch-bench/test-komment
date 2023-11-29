@@ -105,18 +105,6 @@ class PatchOperation(object):
     """A single operation inside a JSON Patch."""
 
     def __init__(self, operation, pointer_cls=JsonPointer):
-        """
-        This function initiates a `JsonPatch` object and sets its properties based
-        on the input "operation" object.
-
-        Args:
-            operation (dict): The `operation` input parameter represents a JSON
-                object containing the patch information such as "path" and "value".
-            pointer_cls (int): The `pointer_cls` input parameter specifies the
-                class to use for constructing JSON pointers during the parsing of
-                the patch operation.
-
-        """
         self.pointer_cls = pointer_cls
 
         if not operation.__contains__('path'):
