@@ -88,6 +88,30 @@ _jsonloads = functools.partial(json.loads, object_pairs_hook=multidict)
 
 
 def apply_patch(doc, patch, in_place=False, pointer_cls=JsonPointer):
+    """
+    This function takes a JSON document ( doc ), a JSON patch string ( patch ) or
+    a pre-created JSON patch object (patch), and optionally modifies the document
+    'in-place'.
+
+    Args:
+        doc (dict): The `doc` input parameter is the document that the patch will
+            be applied to.
+        patch (str): The `patch` input parameter is a JSON Patch object that
+            represents the changes to be applied to the `doc` document.
+        in_place (bool): The `in_place` input parameter specifies whether the patch
+            operations should be applied to the original document "in place" (i.e.,
+            modifying the original document directly), or return a new modified
+            document instead.
+        pointer_cls (str): The `pointer_cls` parameter is an optional argument
+            that specifies the class to use for parsing JSON pointers (e.g.,
+            'array-index' or 'object-field'). Its purpose is to enable parsing of
+            relative JSON pointer paths containing indices or keys starting with
+            '.' and/or '#'.
+
+    Returns:
+        : The output returned by this function is a `JsonPatch` object.
+
+    """
     if isinstance(patch, basestring):
         patch = JsonPatch.from_string(patch, pointer_cls=pointer_cls)
     else:
@@ -98,6 +122,26 @@ def apply_patch(doc, patch, in_place=False, pointer_cls=JsonPointer):
 
 def make_patch(src, dst, pointer_cls=JsonPointer):
     
+    """
+    This function creates a JSON patch from the difference between two JSON objects.
+    It takes three arguments:
+    	- `src`: The original JSON object.
+    	- `dst`: The modified JSON object.
+    	- `pointer_cls`: (optional) An instance of a class that implements `JsonPointer`,
+    used to construct pointers for the patch.
+
+    Args:
+        src (dict): The `src` input parameter is the original or starting value
+            of the object being patched.
+        dst (): The `dst` input parameter is the "destination" or "updated" value
+            that will be used to generate the JSON patch.
+        pointer_cls (int): The `pointer_cls` parameter is an optional type hint
+            for the `JsonPointer` class.
+
+    Returns:
+        dict: The function `make_patch` returns a `JsonPatch` object.
+
+    """
     return JsonPatch.from_diff(src, dst, pointer_cls=pointer_cls)
 
 
@@ -105,6 +149,18 @@ class PatchOperation(object):
     """A single operation inside a JSON Patch."""
 
     def __init__(self, operation, pointer_cls=JsonPointer):
+        """
+        This function takes an "operation" argument and a pointer class "pointer_cls"
+        and creates an instance of itself with the given operation and location.
+
+        Args:
+            operation (dict): The `operation` parameter is an object that contains
+                the information about the patch operation to be applied.
+            pointer_cls (int): The `pointer_cls` input parameter specifies the
+                class to use for creating pointers from JSON Pointer values contained
+                within the operation.
+
+        """
         self.pointer_cls = pointer_cls
 
         if not operation.__contains__('path'):
