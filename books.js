@@ -22,26 +22,14 @@ class Book {
         this.isbn = isbn;
     }
 
-/**
-* @description This function is a custom toString method for an object.
-* 
-* @returns { string } The output returned by this function is:
-* 
-* "[Not defined] by [Not defined] (ISBN: [Not defined])".
-*/
+
     toString() {
         return `${this.title} by ${this.author} (ISBN: ${this.isbn})`;
     }
 }
 
 class Library {
-/**
-* @description This is a constructor function for an object that initializes an array 
-* of books to be empty.
-* 
-* @returns { object } - The output of the function is an empty array (`[]`) because 
-* the `books` property is initialized as an empty array in the constructor.
-*/
+
     constructor() {
         this.books = [];
     }
