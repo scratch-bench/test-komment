@@ -1,6 +1,22 @@
 
 class Book {
 
+/**
+* @description This is a constructor function that sets the properties `title`,
+* `author`, and `isbn` of an object.
+* 
+* @param { string } title - The `title` input parameter sets the value of the `title`
+* property of the object being constructed.
+* 
+* @param { string } author - The `author` input parameter sets the value of the
+* `this.author` property within the constructor function.
+* 
+* @param { string } isbn - The `isbn` input parameter represents the International
+* Standard Book Number of the book being constructed.
+* 
+* @returns { object } This function takes three arguments `title`, `author`, and
+* `isbn` and returns an object with these properties.
+*/
     constructor(title, author, isbn) {
         this.title = title;
         this.author = author;
@@ -8,6 +24,15 @@ class Book {
     }
 
 
+/**
+* @description This function is a string representation of an object. It takes the
+* values of the object's properties ("title", "author", and "isbn") and concatenates
+* them into a string with templates variable expressions `${...}`.
+* 
+* @returns { string } The output returned by this function is a string that represents
+* the book's title and author followed by the ISBN. The output would be something
+* like "The Great Gatsby by F.
+*/
     toString() {
         return `${this.title} by ${this.author} (ISBN: ${this.isbn})`;
     }
@@ -15,6 +40,13 @@ class Book {
 
 class Library {
 
+/**
+* @description The constructor function defines a new object and initializes an empty
+* array called `books`.
+* 
+* @returns { object } The function doesn't return any value. The `void` keyword
+* indicates that the function does not return anything.
+*/
     constructor() {
         this.books = [];
     }
