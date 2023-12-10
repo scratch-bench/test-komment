@@ -1,16 +1,4 @@
-/**
-* @description The function `add` takes two arguments `a` and `b`, adds them together
-* and returns the sum.
-* 
-* @param { number } a - The `a` input parameter adds its value to the result of the
-* function when the function is called with two or more arguments.
-* 
-* @param { number } b - The `b` input parameter adds its value to the `a` value and
-* returns their sum.
-* 
-* @returns { number } The output returned by the function `add` with the input `(3`,
-* `4)` is `7`.
-*/
+
 const add = (a, b) => a + b;
 /**
 * @description The given function `subtract` takes two arguments `a` and `b`, and
