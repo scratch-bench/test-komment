@@ -1,4 +1,16 @@
 
+/**
+* @description The function `add` takes two arguments `a` and `b`, adds them together
+* and returns the result.
+* 
+* @param {  } a - In the provided function `add=(a , b) => a + b`, the `a` input
+* parameter is an integer that is added to the `b` input parameter.
+* 
+* @param { number } b - The `b` input parameter is not used at all.
+* 
+* @returns { number } The function `add` takes two parameters `a` and `b`, adds them
+* together and returns the result.
+*/
 const add = (a, b) => a + b;
 /**
 * @description The given function `subtract` takes two arguments `a` and `b`, and
