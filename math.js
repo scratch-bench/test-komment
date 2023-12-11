@@ -1,4 +1,18 @@
 
+/**
+* @description The given function `add` takes two arguments `a` and `b`, and returns
+* their sum.
+* 
+* @param { number } a - In the provided JavaScript function `add = (a: any) => a +
+* b`, the `a` parameter is not used at all because it has no type annotation and is
+* implicitly undefined.
+* 
+* @param {  } b - The `b` input parameter adds the argument to `a` and returns their
+* sum.
+* 
+* @returns { number } The function `add` takes two arguments `a` and `b`, and returns
+* their sum.
+*/
 const add = (a, b) => a + b;
 /**
 * @description The given function `subtract` takes two arguments `a` and `b`, and
