@@ -1,31 +1,5 @@
 
 class Book {
-
-/**
-* @description This function is a constructor for an object that takes three arguments
-* - `title`, `author`, and `isbn` - and assigns them to properties with the same
-* name inside the object.
-* 
-* @param { string } title - The `title` input parameter sets the value of the object's
-* `title` property.
-* 
-* @param { string } author - The `author` input parameter sets the value of the
-* `author` property within the constructor.
-* 
-* @param { string } isbn - The `isbn` input parameter specifies the International
-* Standard Book Number (ISBN) of the book being constructed.
-* 
-* @returns { object } The function you provided is a constructor function for an
-* object that initializes properties `title`, `author`, and `isbn` with the passed
-* arguments. The output returned by the function is an object with these properties
-* set to the passed values.
-* 
-* Here's an example usage:
-* ```javascript
-* const book = new Book("The Great Gatsby", "F. Scott Fitzgerald", "123456789");
-* console.log(book.title); // output: "The Great Gatsby"
-* console.log(book.author); // output: "F.
-*/
     constructor(title, author, isbn) {
         this.title = title;
         this.author = author;
