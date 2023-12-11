@@ -1,24 +1,6 @@
 
 class Book {
-/**
-* @description This is a constructor function that takes three arguments (title/,
-* author/, and isbn) and assigns them to the corresponding properties of an object
-* (this.title_, this.author_, and this.isbn).
-* 
-* @param { string } title - The `title` input parameter sets the value of the `title`
-* property within the constructed object.
-* 
-* @param { string } author - The `author` input parameter stores the name of the
-* book's author.
-* 
-* @param { string } isbn - The `isbn` input parameter represents the International
-* Standard Book Number of the book and is used to identify the specific title being
-* constructed.
-* 
-* @returns { object } This is a constructor function for an object that takes three
-* arguments `title`, `author`, and `isbn` and initializes three properties with those
-* values.
-*/
+
     constructor(title, author, isbn) {
         this.title = title;
         this.author = author;
