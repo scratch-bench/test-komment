@@ -1,5 +1,20 @@
 
 class Book {
+/**
+* @description This function is a constructor that initializes the properties of an
+* object with the specified parameters: `title`, `author`, and `isbn`.
+* 
+* @param { string } title - The `title` input parameter sets the value of the object's
+* `title` property.
+* 
+* @param { string } author - The `author` input parameter stores the value of the
+* author's name for the book being constructed.
+* 
+* @param { string } isbn - The `isbn` input parameter sets the book's International
+* Standard Book Number (ISBN) for the book.
+* 
+* @returns { object } The output returned by this function is `undefined`.
+*/
     constructor(title, author, isbn) {
         this.title = title;
         this.author = author;
