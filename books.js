@@ -1,6 +1,22 @@
 
 class Book {
 
+/**
+* @description This is a constructor function that initializes an object with the
+* given properties: `title`, `author`, and `isbn`.
+* 
+* @param { string } title - The `title` input parameter sets the value of the `title`
+* property within the `Book` constructor.
+* 
+* @param { string } author - The `author` input parameter assigns the value passed
+* to it as a string to the instance variable `author`.
+* 
+* @param { string } isbn - The `isbn` input parameter is a string value that represents
+* the International Standard Book Number for the book being constructed.
+* 
+* @returns { object } This function takes three parameters `title`, `author`, and
+* `isbn` and assigns their values to instance properties with the same names.
+*/
     constructor(title, author, isbn) {
         this.title = title;
         this.author = author;
@@ -8,6 +24,14 @@ class Book {
     }
 
 
+/**
+* @description This function is a string representation of the object. It takes the
+* object's properties (title", "author", and "isbn") and creates a string by combining
+* them using `${ }`.
+* 
+* @returns { string } The output returned by this function is a string that consists
+* of the book's title followed by the author's name and the ISBN (if it exists).
+*/
     toString() {
         return `${this.title} by ${this.author} (ISBN: ${this.isbn})`;
     }
