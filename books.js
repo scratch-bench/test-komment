@@ -1,6 +1,23 @@
 
 class Book {
 
+/**
+* @description This function creates a new object with properties `title`, `author`,
+* and `isbn` based on the constructor's arguments.
+* 
+* @param { string } title - The `title` input parameter sets the value of the
+* `this.title` property within the constructor function.
+* 
+* @param { string } author - The `author` input parameter sets the value of the
+* `author` property within the object being constructed.
+* 
+* @param { string } isbn - The `isbn` input parameter specifies the International
+* Standard Book Number for the book being constructed.
+* 
+* @returns { object } The output of this function is an object with three properties:
+* `title`, `author`, and `isbn`. These properties are assigned the values passed to
+* the function as arguments.
+*/
     constructor(title, author, isbn) {
         this.title = title;
         this.author = author;
@@ -8,6 +25,12 @@ class Book {
     }
 
 
+/**
+* @description This function is a toString() method for an object.
+* 
+* @returns { string } The output returned by this function is a string that includes
+* the book title and author information.
+*/
     toString() {
         return `${this.title} by ${this.author} (ISBN: ${this.isbn})`;
     }
