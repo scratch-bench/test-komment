@@ -1,25 +1,6 @@
 
 class Book {
 
-/**
-* @description This is a constructor function for an object that takes three arguments:
-* `title`, `author`, and `isbn`.
-* 
-* @param { string } title - The `title` input parameter sets the value of the `title`
-* property of the newly created book object.
-* 
-* @param { string } author - The `author` input parameter assigns a string value to
-* the object's property named `author`.
-* 
-* @param { string } isbn - The `isbn` input parameter is the International Standard
-* Book Number of the book being constructed.
-* 
-* @returns { object } This is a constructor function that takes three arguments:
-* `title`, `author`, and `isbn`. The function does not return anything (the `return`
-* statement is omitted). Instead of returning a value from the constructor function
-* when it finishes running all your functions and variables live inside their own
-* scope or local to a specific class and are only available there.
-*/
     constructor(title, author, isbn) {
         this.title = title;
         this.author = author;
@@ -27,15 +8,6 @@ class Book {
     }
 
 
-/**
-* @description This function is a string representation of an object. It takes the
-* values of the object's properties ("title", "author", and "isbn") and concatenates
-* them into a string with templates variable expressions `${...}`.
-* 
-* @returns { string } The output returned by this function is a string that represents
-* the book's title and author followed by the ISBN. The output would be something
-* like "The Great Gatsby by F.
-*/
     toString() {
         return `${this.title} by ${this.author} (ISBN: ${this.isbn})`;
     }
