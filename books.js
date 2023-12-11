@@ -8,14 +8,6 @@ class Book {
     }
 
 
-/**
-* @description This function is a string representation of the object. It takes the
-* object's properties (title", "author", and "isbn") and creates a string by combining
-* them using `${ }`.
-* 
-* @returns { string } The output returned by this function is a string that consists
-* of the book's title followed by the author's name and the ISBN (if it exists).
-*/
     toString() {
         return `${this.title} by ${this.author} (ISBN: ${this.isbn})`;
     }
