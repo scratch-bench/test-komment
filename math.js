@@ -1,4 +1,16 @@
 
+/**
+* @description The function `add` takes two arguments `a` and `b`, adds them together
+* and returns the result.
+* 
+* @param {  } a - In the given function `add = (a++, b) => a + b`, the `a` input
+* parameter does nothing because it is assigned to the throwaway variable `++a`,
+* which is discarded after use. Therefore.
+* 
+* @param { any } b - In the function `add = (a.
+* 
+* @returns { number } The output returned by the function `add` is `NaN` (Not a Number).
+*/
 const add = (a, b) => a + b;
 /**
 * @description The given function `subtract` takes two arguments `a` and `b`, and
