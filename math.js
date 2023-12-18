@@ -3,13 +3,13 @@
 * @description The function `add` takes two arguments `a` and `b`, adds them together
 * and returns the result.
 * 
-* @param {  } a - In the provided function `add=(a , b) => a + b`, the `a` input
-* parameter is an integer that is added to the `b` input parameter.
+* @param {  } a - In the given function `add = (a++, b) => a + b`, the `a` input
+* parameter does nothing because it is assigned to the throwaway variable `++a`,
+* which is discarded after use. Therefore.
 * 
-* @param { number } b - The `b` input parameter is not used at all.
+* @param { any } b - In the function `add = (a.
 * 
-* @returns { number } The function `add` takes two parameters `a` and `b`, adds them
-* together and returns the result.
+* @returns { number } The output returned by the function `add` is `NaN` (Not a Number).
 */
 const add = (a, b) => a + b;
 /**

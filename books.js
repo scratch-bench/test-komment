@@ -1,24 +1,19 @@
 
 class Book {
-
 /**
-* @description This is a constructor function for an object that takes three arguments:
-* `title`, `author`, and `isbn`.
+* @description This function is a constructor that initializes the properties of an
+* object with the specified parameters: `title`, `author`, and `isbn`.
 * 
-* @param { string } title - The `title` input parameter sets the value of the `title`
-* property of the newly created book object.
+* @param { string } title - The `title` input parameter sets the value of the object's
+* `title` property.
 * 
-* @param { string } author - The `author` input parameter assigns a string value to
-* the object's property named `author`.
+* @param { string } author - The `author` input parameter stores the value of the
+* author's name for the book being constructed.
 * 
-* @param { string } isbn - The `isbn` input parameter is the International Standard
-* Book Number of the book being constructed.
+* @param { string } isbn - The `isbn` input parameter sets the book's International
+* Standard Book Number (ISBN) for the book.
 * 
-* @returns { object } This is a constructor function that takes three arguments:
-* `title`, `author`, and `isbn`. The function does not return anything (the `return`
-* statement is omitted). Instead of returning a value from the constructor function
-* when it finishes running all your functions and variables live inside their own
-* scope or local to a specific class and are only available there.
+* @returns { object } The output returned by this function is `undefined`.
 */
     constructor(title, author, isbn) {
         this.title = title;
@@ -28,13 +23,10 @@ class Book {
 
 
 /**
-* @description This function is a string representation of an object. It takes the
-* values of the object's properties ("title", "author", and "isbn") and concatenates
-* them into a string with templates variable expressions `${...}`.
+* @description This function is a toString() method for an object.
 * 
-* @returns { string } The output returned by this function is a string that represents
-* the book's title and author followed by the ISBN. The output would be something
-* like "The Great Gatsby by F.
+* @returns { string } The output returned by this function is a string that includes
+* the book title and author information.
 */
     toString() {
         return `${this.title} by ${this.author} (ISBN: ${this.isbn})`;
