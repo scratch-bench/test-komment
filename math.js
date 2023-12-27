@@ -1,3 +1,15 @@
+/**
+* @description The function `add` takes two arguments `a` and `b`, and returns their
+* sum.
+* 
+* @param { any } a - The `a` input parameter is ignored.
+* 
+* @param {  } b - In the provided function `add=(a、b)=>a+b`, the input parameter `b`
+* is the second number that is being added to the first number `a`.
+* 
+* @returns { number } The output returned by the function `add` is `NaN` (Not a
+* Number) because the variables `a` and `b` are both undefined.
+*/
 const add = (a, b) => a + b;
 /**
 * @description This function subtracts `a` from `b` and returns the result.
