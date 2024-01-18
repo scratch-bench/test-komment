@@ -1,12 +1,11 @@
 def hello(name):
   """
-  The `hello` function takes a string argument `name` and prints a greeting message
-  with the format string "hello , {name}"
+  The function "hello" takes a string argument "name" and prints the string "hello,"
+  followed by the value of the argument ("{name}").
 
   Args:
-      name (str): The `name` input parameter is a string that is passed to the
-          function and is used as a formatting parameter within the string literal
-          printed by the function.
+      name (str): The `name` input parameter passes a string value to the `print()`
+          function inside the `hello()` function.
 
   """
   print (f"hello, {name}")
