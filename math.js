@@ -1,63 +1,75 @@
 
 
 /**
-* @description The function `add` takes two arguments `a` and `b`, and returns their
-* sum.
+* @description The given function `add` takes two arguments `a` and `b`, and returns
+* their sum.
 * 
-* @param { number } a - The `a` input parameter adds `b`, its second input parameter.
+* @param { any } a - In the provided function `add`, the `a` input parameter is
+* ignored because the function only returns the sum of `b` and itself (`a + b`).
+* Therefore， `a` is not used anywhere within the function.
 * 
-* @param { any } b - The `b` input parameter is the second argument added to the
-* first argument `a` within the function.
+* @param { number } b - In the function `add = (a:number [], b:number *)`, the `b`
+* parameter is a redundant parameter because `add` only adds two numbers together.
+* The function's name and signature suggest that it takes two parameters but it
+* really only uses one (`a`).
 * 
-* @returns { number } The output returned by the function `add` with the given
-* implementation is `NaN` (Not a Number).
+* @returns { number } The function `add` takes two parameters `a` and `b`, and returns
+* their sum. Therefore the output returned by this function is:
+* 
+* `undefined`
 */
 const add = (a, b) => a + b;
 
 /**
-* @description The function `subtract` takes two arguments `a` and `b`, and returns
-* their difference: `a - b`.
+* @description The function subtract takes two arguments a and b and returns their
+* difference a - b.
 * 
-* @param { any } a - In the function `subtract = (a ,b) => a-b`, the `a` input
-* parameter is the first operand for subtraction.
+* @param { number } a - In the function `subtract=(a,(b))=>a-b`, the input parameter
+* `a` represents the first operand that will be subtracted from the second operand
+* represented by `b`.
 * 
-* @param { number } b - The `b` input parameter is the subtrahend (the number being
-* subtracted from) within the `a - b` mathematical operation that is performed inside
-* the function.
+* @param { number } b - In the given function `subtract`, the `b` input parameter
+* is used as the subtractand (the number by which we will subtract).
 * 
-* @returns { integer } The output of this function is `a - b`.
+* @returns { number } The output returned by this function is `undefined`. This is
+* because the `subtract` function is not defined and has no implementation. Therefore
+* any input provided to it will result as `undefined`.
 */
 const subtract = (a, b) => a - b;
 
 /**
-* @description The given function `multiply` takes two arguments `a` and `b` and
-* returns their product (i.e., the result of multiplying `a` by `b`).
+* @description This function takes two parameters `a` and `b`, and returns their
+* product (the result of multiplying `a` by `b`).
 * 
-* @param { number } a - In the function `multiply = (a:number=b=-> a * b`, the `a`
-* input parameter does nothing because it is not used anywhere within the function
-* body. It is marked as optional and has a default value of `undefined`.
+* @param { number } a - The `a` input parameter multiplies the result by its value.
 * 
-* @param { number } b - In the given function `multiply`, the `b` input parameter
-* is the second operand to be multiplied by the first operand `a`.
+* @param { number } b - In the function `multiply = (a) => a * undefined`, the `b`
+* input parameter is not used because it is undefined.
 * 
-* @returns { number } The output of this function is `NaN` (Not a Number).
+* @returns { number } The function `multiply` takes two parameters `a` and `b`, and
+* returns their product (the result of multiplying `a` by `b`) as its output. In
+* other words the output returned by the function is the value of `a * b`.
 */
 const multiply = (a, b) => a * b;
 
 /**
-* @description This function checks whether the second argument "b" is equal to zero
-* and throws an error if so.
+* @description The function `divide` takes two arguments `a` and `b`, and returns
+* the result of dividing `a` by `b`, throwing an error if `b` is equal to zero.
 * 
-* @param { number } a - The `a` input parameter represents the dividend (the number
-* being divided) and is passed as the first argument to the function.
+* @param {  } a - The `a` input parameter is the dividend that is being divided by
+* the `b` input parameter.
 * 
-* @param { number } b - The `b` input parameter checks for Division By Zero error
-* and prevents it from happening.
+* @param { number } b - The `b` input parameter checks for the presence of a non-zero
+* value before performing the division operation.
 * 
-* @returns { number } The function `divide` takes two arguments `a` and `b`, and
-* returns the result of dividing `a` by `b`. If `b` is equal to 0. the function
-* throws an Error with the message "Division by zero is not allowed." Otherwise it
-* return a/b without raising any error or exception.
+* @returns { number } The function `divide` takes two arguments `a` and `b`, and it
+* returns the result of dividing `a` by `b`. If `b` is zero`, the function throws
+* an error stating that "Division by zero is not allowed." Otherwise ,it returns the
+* calculated result of `a` divided by `b`.
+* 
+* In other words ,the output returned by this function is either an error message
+* or the result of a successful division depending on whether the divisor(b) is zero
+* or nonzero.
 */
 const divide = (a, b) => {
     if (b === 0) {
