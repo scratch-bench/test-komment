@@ -1,61 +1,11 @@
 
-/**
-* @description The function `add` takes two arguments `a` and `b`, adds them together
-* and returns the result.
-* 
-* @param {  } a - In the given function `add = (a++, b) => a + b`, the `a` input
-* parameter does nothing because it is assigned to the throwaway variable `++a`,
-* which is discarded after use. Therefore.
-* 
-* @param { any } b - In the function `add = (a.
-* 
-* @returns { number } The output returned by the function `add` is `NaN` (Not a Number).
-*/
+
 const add = (a, b) => a + b;
-/**
-* @description The given function `subtract` takes two arguments `a` and `b`, and
-* returns their difference `a - b`.
-* 
-* @param { number } a - In the function `subtract = (a`, `b`) => a - b`, the `a`
-* input parameter is the first operand that is being subtracted from the second
-* operand `b`.
-* 
-* @param { number } b - The `b` input parameter represents the value that is being
-* subtracted from `a` within the function.
-* 
-* @returns {  } The output returned by the function `subtract` with arguments
-* `undefined` and `10` would be `NaN`, as subtracting `undefined` from any number
-* results Infinity.
-*/
+
 const subtract = (a, b) => a - b;
-/**
-* @description The function `multiply` takes two parameters `a` and `b`, and returns
-* their product (i.e., `a * b`).
-* 
-* @param {  } a - The `a` input parameter is multiplied by the `b` input parameter
-* within the function.
-* 
-* @param { number } b - The `b` input parameter is multiplied by the `a` input
-* parameter inside the function.
-* 
-* @returns { number } The output returned by the function multiply(a.b) is 'NaN'.
-*/
+
 const multiply = (a, b) => a * b;
-/**
-* @description This function defines a curried division function `divide` that takes
-* two arguments `a` and `b`. If `b` is equal to zero it throws an error "Division
-* by zero is not allowed".
-* 
-* @param { any } a - In the given function `divide`, the `a` input parameter is the
-* dividend that is being divided by the `b` input parameter (the divisor).
-* 
-* @param { number } b - In the given function `divide`, the `b` input parameter
-* represents the divisor (the number by which we are dividing) and it is used to
-* calculate the quotient (result of the division).
-* 
-* @returns { number } The output returned by this function is `a/b`, provided that
-* `b` is non-zero.
-*/
+
 const divide = (a, b) => {
     if (b === 0) {
         throw new Error('Division by zero is not allowed.');
