@@ -31,6 +31,16 @@ namespace TDengineDriver
         private IntPtr conn = IntPtr.Zero;
         private long rowsInserted = 0;
 
+        /// <summary> 
+        /// initializes and tests the `TDengineTest` class, which simulates a TDengine engine 
+        /// for testing purposes. It creates a database, table, and executes insert and query 
+        /// operations on the TDengine engine. 
+        /// </summary> 
+        /// <param name="args"> 
+        /// 0 or more command line arguments passed to the program when it is executed, which 
+        /// are read and used by the `TDengineTest` class to initialize its state and perform 
+        /// the desired testing functionality. 
+        /// </param> 
         static void Main(string[] args)
         {
             TDengineTest tester = new TDengineTest();
@@ -53,6 +63,28 @@ namespace TDengineDriver
 
         }
 
+        /// <summary> 
+        /// parses input arguments from an array and returns a long value based on the input. 
+        /// </summary> 
+        /// <param name="argv"> 
+        /// array of command-line arguments passed to the program. 
+        /// </param> 
+        /// <param name="argName"> 
+        /// name of the command-line argument being checked, which is used to identify the 
+        /// correct option and validate its value. 
+        /// </param> 
+        /// <param name="minVal"> 
+        /// minimum value that the `long` argument can take. 
+        /// </param> 
+        /// <param name="maxVal"> 
+        /// maximum value that an argument for the specified option can have. 
+        /// </param> 
+        /// <param name="defaultValue"> 
+        /// value that is returned if no valid argument is provided for the specified option. 
+        /// </param> 
+        /// <returns> 
+        /// a long value representing the argument passed to it. 
+        /// </returns> 
         public long GetArgumentAsLong(String[] argv, String argName, int minVal, int maxVal, int defaultValue)
         {
             int argc = argv.Length;
@@ -86,6 +118,24 @@ namespace TDengineDriver
         }
 
 
+        /// <summary> 
+        /// retrieves a string argument from an array of strings, checking if it matches the 
+        /// specified name and handling errors gracefully. If no matching argument is found, 
+        /// the default value is returned. 
+        /// </summary> 
+        /// <param name="argv"> 
+        /// 1-dimensional array of command line arguments passed to the function. 
+        /// </param> 
+        /// <param name="argName"> 
+        /// name of the argument being searched for in the `String[] argv`. 
+        /// </param> 
+        /// <param name="defaultValue"> 
+        /// value that will be returned if no valid argument is found in the `argv` array. 
+        /// </param> 
+        /// <returns> 
+        /// the default value specified in the `defaultValue` parameter if no argument matching 
+        /// the `argName` parameter is found in the `argv` array. 
+        /// </returns> 
         public String GetArgumentAsString(String[] argv, String argName, String defaultValue)
         {
             int argc = argv.Length;
@@ -110,6 +160,14 @@ namespace TDengineDriver
             return defaultValue;
         }
 
+        /// <summary> 
+        /// provides a help message for a command-line tool that operates TDengine using C# 
+        /// language, listing options and their defaults. 
+        /// </summary> 
+        /// <param name="argv"> 
+        /// 10 command-line arguments passed to the function, which are used to determine the 
+        /// help message to display. 
+        /// </param> 
         public void PrintHelp(String[] argv)
         {
             for (int i = 0; i < argv.Length; ++i)
@@ -148,6 +206,15 @@ namespace TDengineDriver
             }
         }
 
+        /// <summary> 
+        /// parses command-line arguments and extracts various configuration parameters, 
+        /// including hostname, user name, password, database name, stable name, table prefix, 
+        /// insert/query flag, table count, batch rows, total rows, and config directory. 
+        /// </summary> 
+        /// <param name="argv"> 
+        /// command-line arguments passed to the program, which are used to extract the various 
+        /// configuration options and values for the TDengine client. 
+        /// </param> 
         public void ReadArgument(String[] argv)
         {
             PrintHelp(argv);
@@ -165,6 +232,10 @@ namespace TDengineDriver
             configDir = this.GetArgumentAsString(argv, "-c", "C:/TDengine/cfg");
         }
 
+        /// <summary> 
+        /// sets options for TDengine and initializes it, then prints a message to the console 
+        /// indicating that initialization has finished. 
+        /// </summary> 
         public void InitTDengine()
         {
             TDengine.Options((int)TDengineInitOption.TDDB_OPTION_CONFIGDIR, this.configDir);
@@ -173,6 +244,10 @@ namespace TDengineDriver
             Console.WriteLine("TDengine Initialization finished");
         }
 
+        /// <summary> 
+        /// establishes a connection with TDengine using the specified host, user, password, 
+        /// and database name, and prints a success or failure message to the console. 
+        /// </summary> 
         public void ConnectTDengine()
         {
             string db = "";
@@ -188,6 +263,10 @@ namespace TDengineDriver
             }
         }
 
+        /// <summary> 
+        /// creates a database if it does not exist, then creates a table within that database 
+        /// using a specified schema. 
+        /// </summary> 
         public void CreateDbAndTable()
         {
             if (!this.isInsertData)
@@ -278,6 +357,11 @@ namespace TDengineDriver
             Console.WriteLine("create db and table success");
         }
 
+        /// <summary> 
+        /// inserts data into multiple tables in a database using TDengine queries. It checks 
+        /// if there is any insert data, loops through each table, and inserts rows based on 
+        /// a batch size. 
+        /// </summary> 
         public void ExecuteInsert()
         {
             if (!this.isInsertData)
@@ -328,6 +412,12 @@ namespace TDengineDriver
               , this.rowsInserted, this.totalRows * this.tableCount - this.rowsInserted, ts.TotalSeconds);
         }
 
+        /// <summary> 
+        /// executes a TDengine query and retrieves the results. It iterates through the tables 
+        /// specified in the `dbName` field, fetches rows from the query result, and appends 
+        /// each row to a StringBuilder object. The function then prints the contents of the 
+        /// StringBuilder object to the console. 
+        /// </summary> 
         public void ExecuteQuery()
         {
             if (!this.isQueryData)
@@ -470,6 +560,9 @@ namespace TDengineDriver
              , this.rowsInserted, queryRows, ts.TotalSeconds);
         }
 
+        /// <summary> 
+        /// terminates a TDengine connection. 
+        /// </summary> 
         public void CloseConnection()
         {
             if (this.conn != IntPtr.Zero)
@@ -478,6 +571,10 @@ namespace TDengineDriver
             }
         }
 
+        /// <summary> 
+        /// cleans up resources using `TDengine.Cleanup()` and exits the program with a status 
+        /// code of 0 through `System.Environment.Exit()`. 
+        /// </summary> 
         static void ExitProgram()
         {
             TDengine.Cleanup();
