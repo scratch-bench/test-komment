@@ -1,4 +1,4 @@
 class A {
 
-  static voic B() {}
+  static void B() {}
 }
