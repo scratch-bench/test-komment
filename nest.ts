@@ -4,3 +4,6 @@ const x: F = (): void => {
   };
   y();
 };
+
+
+// we definitely made a change
