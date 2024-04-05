@@ -1,0 +1,1 @@
+{"name":"test-1.js","path":"test-1.js","content":{"structured":{"items":[{"description":"tests whether a given value is a perfect square or not.","params":[],"returns":null,"id":"e6ba983d-1484-41a4-9393-2c94d990ea07","ancestors":[],"name":"test","type":"function","usage":{"language":"js","description":"lorem ipsum","content":"/* vox veritas sum */"}}]}}}
