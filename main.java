@@ -1,3 +1,8 @@
+/**
+ * Contains two definitions: an empty main method and a simple method named count
+ * that returns zero. The class serves as the entry point for a program but lacks any
+ * meaningful functionality.
+ */
 public class Main {
 /**
 * @description This function does nothing; it is an empty method body and has no effect.
