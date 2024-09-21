@@ -1,4 +1,10 @@
 
+/**
+ * @description Represents a book with title, author, and ISBN properties. It
+ * encapsulates these characteristics into an object that can be instantiated and
+ * manipulated through its methods, providing a structured way to store and display
+ * book information.
+ */
 class Book {
 /**
 * @description This function is a constructor that initializes the properties of an
@@ -33,6 +39,12 @@ class Book {
     }
 }
 
+/**
+ * @description Encapsulates a collection of books, providing methods to manage and
+ * interact with the book catalog, such as adding, removing, listing, and searching
+ * for specific books based on their properties. It organizes data into objects for
+ * efficient storage and retrieval.
+ */
 class Library {
 
 /**

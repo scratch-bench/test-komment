@@ -790,6 +790,36 @@ class CopyOperation(PatchOperation):
 
 
 class JsonPatch(object):
+    """
+    Applies a collection of JSON Patch operations to a document. It validates the
+    patch structure and provides methods for converting the patch to a string,
+    applying it to an object, and creating a patch from a diff or a string.
+
+    Attributes:
+        json_dumper (Callable[[dict],str]): A static method referencing the built-in
+            `json.dumps()` function, which converts a Python object into a
+            JSON-formatted string.
+        json_loader (Callable[[str],dict]|None): Initialized with the `_jsonloads`
+            function as a static method using `classmethod`. It is used to load
+            JSON data from a string.
+        operations (MappingProxyType[Dict[str,Type[JsonPatchOperation]]]): Initialized
+            with a dictionary mapping operation names to their respective classes.
+            It contains mappings for 'remove', 'add', 'replace', 'move', 'test'
+            and 'copy'.
+        __nonzero__ (NoneType|callable): A legacy method name that serves as an
+            alias for `__bool__`, which is used to define how instances of the
+            class should be interpreted in boolean context.
+        patch (Dict[Union[str,dict],Any]|str): A collection of operations to be
+            applied to a document. It is initialized during the instance creation
+            by assigning the input parameter of the same name.
+        pointer_cls (JsonPointer|None): Used to specify the class for creating
+            JSON pointers when applying the patch. It defaults to JsonPointer if
+            not specified.
+        _get_operation (Operation|None): Used to retrieve a specific operation
+            from its string representation within the patch document based on its
+            'op' key.
+
+    """
     json_dumper = staticmethod(json.dumps)
     json_loader = staticmethod(_jsonloads)
 
@@ -1085,6 +1115,35 @@ class JsonPatch(object):
 
 class DiffBuilder(object):
 
+    """
+    Constructs a diff between two documents, tracking changes to their structure
+    and content. It iteratively compares key-value pairs, lists, and dictionaries,
+    generating operations to reconcile differences between source and destination
+    documents.
+
+    Attributes:
+        dumps (Callable[[Any],str]|None): Set to `json.dumps` during initialization.
+            It is a function used to convert a value into a JSON formatted string,
+            typically for comparison purposes.
+        pointer_cls (Type[JsonPointer]|Type[Anyotherpointerclass]): Used to specify
+            a class for constructing pointers into documents. It defaults to
+            JsonPointer if not specified.
+        index_storage (Dict[tuple,List[int]]|Dict[any,any]): Used for storing the
+            indices of inserted or removed items during the comparison process.
+            It contains two dictionaries with typed keys.
+        index_storage2 (List[List[tuple]]|List[List[tuple,int]]): A storage for
+            index values with different types, used to store indices when storing
+            or taking an index fails.
+        __root (List[List[Union[int,str]]]|None): Initialized with a linked list
+            structure. It serves as a starting point for tree traversal operations
+            such as insertion, removal and iteration.
+        src_doc (MutableMapping): Stored in memory as a document from which
+            differences are being calculated. It represents the original source
+            document to compare against.
+        dst_doc (MutableMapping): Used to store the destination document being
+            compared with the source document (`src_doc`) during diff operations.
+
+    """
     def __init__(self, src_doc, dst_doc, dumps=json.dumps, pointer_cls=JsonPointer):
         """
         This function initializes an object for indexing and comparing two JSON
